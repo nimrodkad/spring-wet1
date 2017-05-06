@@ -24,11 +24,7 @@ bool Xmen::addTeam(int teamID) {
 }
 
 bool Xmen::addStudent(int studentID, int grade, int power) {
-  Team* team = this->findTeam(teamID);
-  if (!team) {
-    return false;
-  }
-  Student* newStud = new Student(studentID, grade, power, team);
+  Student* newStud = new Student(studentID, grade, power);
   if (!this->students->insert(newStud, NULL)) {
     delete newStud;
     return false;
@@ -41,13 +37,12 @@ bool Xmen::addStudent(int studentID, int grade, int power) {
       new OwnedStudent(studentID, grade, power, team, studByID, studByPwr);
   team->ownStudents->insert(ownedStudent, NULL);
   this->updateMostPowerful();
-  this->updateMostPowerful(team);
   delete ownedStudent;
   return true;
 }
 
-Student *Xmen::findStudent(int studentID, Student **studentOut) {
-  Student *dummyStudent1 = new Student(studentID, 0, NULL);
+Student *Xmen::findStudent(int studentID, Student **studentOut) { //////////////
+  Student *dummyStudent1 = new Student(studentID, 0, 0);
   AVLtree<Student, Student, compByStudentID>::AVLNode *lastNode1;
   AVLtree<Student, Student, compByStudentID>::AVLNode *studentById =
       this->students->find(this->students->root, dummyStudent1, &lastNode1);
@@ -131,7 +126,7 @@ int Xmen::replaceMagizoologist(int teamID, int replacementID) {
 }
 
 
-bool Xmen::increaseLevel(int studentID, int levelIncrease) {
+void Xmen::increaseLevel(int studentID, int levelIncrease) { // changed from bool to void
   Student *dummy = NULL;
   Student *creature = this->findCreature(studentID, &dummy);
   if (!creature) { //no such creature

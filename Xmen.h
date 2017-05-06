@@ -65,7 +65,7 @@ public:
 
   //increaseLevel function: increases the power of all students in a given grade
   //by a positive number. returns true if SUCCESS and false otherwise.
-  bool increaseLevel(int grade, int powerIncrease);
+  void increaseLevel(int grade, int powerIncrease);
 
   //updateMostPowerful function: updates the most powerful student in
   //a given team

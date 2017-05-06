@@ -15,7 +15,7 @@ public:
 	int ID;
 	int mostPowerfulID;
 	int mostPowerfulPower;
-	AVLtree<OwnedStudent, OwnedStudent, compByStudentID>* ownStudents;
+	AVLtree<OwnedStudent, OwnedStudent, compByStudentPower>* ownStudents;
 	Team(int id);
 	Team(Team& team);
 	~Team();
