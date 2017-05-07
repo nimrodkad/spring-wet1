@@ -5,14 +5,14 @@ std::ostream& operator<<(std::ostream& os, const Team& team)
     return os;
 }
 
-Team::Team(int id): ID(id), mostPowerfulID(0),
-		mostPowerfulPower(0){
-	this->ownStudents = new AVLtree<OwnedStudent,OwnedStudent,compByStudentPower>();
+Team::Team(int id): ID(id), mostPowerfulID(-1),
+		mostPowerfulPower(-1){
+	this->ownStudents = new AVLtree<Student,Student,compByStudentPower>();
 }
 
 Team::Team(Team& team){ //*********************
 	this->ID=team.ID;
-	this->ownStudents = new AVLtree<OwnedStudent,OwnedStudent,compByStudentPower>();
+	this->ownStudents = new AVLtree<Student,Student,compByStudentPower>();
 	this->mostPowerfulID=team.mostPowerfulID;
 	this->mostPowerfulPower=team.mostPowerfulPower;
 }

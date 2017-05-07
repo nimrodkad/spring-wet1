@@ -5,11 +5,12 @@
 
 #define DOESNT_EXIST -2
 
-Xmen::Xmen() : mostDangerousID(0), mostDangerousLVL(0) {
+Xmen::Xmen() : mostPowerfulID(-1), mostPowerfulPower(-1) {
   teams = new AVLtree<Team, Team, compByTeamID>();
   students = new AVLtree<Student, Student, compByStudentID>;
   studentsPowers = new AVLtree<Student, Student, compByStudentPower>;
 }
+
 Xmen::~Xmen() {
   delete teams;
   delete students;
@@ -22,7 +23,7 @@ bool Xmen::addTeam(int teamID) {
   delete newTeam;
   return result;
 }
-
+//need to find the students team and then add him to that team's tree*********************
 bool Xmen::addStudent(int studentID, int grade, int power) {
   Student* newStud = new Student(studentID, grade, power);
   if (!this->students->insert(newStud, NULL)) {
@@ -33,8 +34,8 @@ bool Xmen::addStudent(int studentID, int grade, int power) {
   delete newStud;
   Student* studByPwr = NULL;
   Student* studByID = this->findStudent(teamID, &studByPwr);
-  OwnedStudent* ownedStudent =
-      new OwnedStudent(studentID, grade, power, team, studByID, studByPwr);
+  OwnedStudent* studentInTeam =
+      new Student(studentID, grade, power, team, studByID, studByPwr);
   team->ownStudents->insert(ownedStudent, NULL);
   this->updateMostPowerful();
   delete ownedStudent;
@@ -193,10 +194,10 @@ int *Xmen::getAllStudentsByPower(int *numOfStudents, int teamID, int *exist) {
 
 void Xmen::updateMostPowerful(Team *team) {
   if (team->ownStudents->numOfElements == 0) {
-    team->mostPowerfulID = team->mostPowerfulPower = 0;
+    team->mostPowerfulID = team->mostPowerfulPower = -1;
     return;
   }
-  AVLtree<OwnedStudent, OwnedStudent, compByStudentPower>::AVLNode *iterator =
+  AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator =
       team->ownStudents->root;
   while (iterator->right) {
     iterator = iterator->right;
@@ -207,7 +208,7 @@ void Xmen::updateMostPowerful(Team *team) {
 
 void Xmen::updateMostPowerful() {
   if (this->studentsPowers->numOfElements == 0) {
-    this->mostPowerfulID = this->mostPowerfulPower = 0;
+    this->mostPowerfulID = this->mostPowerfulPower = -1;
     return;
   }
   AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator =

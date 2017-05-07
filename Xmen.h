@@ -75,6 +75,6 @@ public:
   //the whole school
   void updateMostPowerful();
 
-  MagicalAgency();
-  ~MagicalAgency();
+  Xmen();
+  ~Xmen();
 };

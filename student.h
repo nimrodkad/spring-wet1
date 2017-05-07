@@ -12,26 +12,12 @@ public:
   int grade;
   int PWR;
   Team* team;
-  virtual void updateTeam(Team* team){
-	  this->team=team;
-    }
-	Student(int id, int grade, int power);
-	Student(Student& student);
-	virtual ~Student();
-};
-
-class OwnedStudent : public Student {//*********************
-public:
-  Student* byID;
-  Student* byPWR;
   void updateTeam(Team* team){
-  	  this->team=team;
-  	  byID->team=team;
-      byPWR->team=team;
-    }
-	OwnedStudent(int id, int grade, int power, Team* team, Student* byID, Student* byPWR);
-	OwnedStudent(OwnedStudent& student);
-	~OwnedStudent();
+	  this->team=team;
+   }
+  Student(int id, int grade, int power);
+  Student(Student& student);
+  ~Student();
 };
 
 class compByStudentPower {
