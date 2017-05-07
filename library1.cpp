@@ -57,7 +57,11 @@ StatusType MoveStudentToTeam(void *DS, int StudentID, int TeamID) {
 		if(!moved){
 			return FAILURE;
 		}
-	}catch (...) {
+	}
+	catch (std::bad_alloc &b) { //added aloc error in the new PDF
+		return ALLOCATION_ERROR;
+	}
+	catch (...) {
 		return FAILURE;
 	}
 	return SUCCESS;
