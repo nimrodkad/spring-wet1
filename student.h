@@ -15,9 +15,8 @@ public:
   void updateTeam(Team* team){
 	  this->team=team;
    }
-  Student(int id, int grade, int power,team=NULL);
+  Student(int id, int grade, int power,Team *team=NULL);
   Student(Student& student);
-  ~Student();
 };
 
 class compByStudentPower {

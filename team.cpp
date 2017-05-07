@@ -1,3 +1,4 @@
+#include "team.h"
 
 std::ostream& operator<<(std::ostream& os, const Team& team)
 {
