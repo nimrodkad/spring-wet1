@@ -28,11 +28,11 @@ bool Xmen::addTeam(int teamID) {
 //adds the student to both of the trees,updates the MostPowerful if needed
 bool Xmen::addStudent(int studentID, int grade, int power) {
 	Student* newStud = new Student(studentID, grade, power);
-	if (!this->students->insert(newStud, NULL)) {
+	if (!this->students->insert(newStud, NULL) ||
+			this->studentsPowers->insert(newStud, NULL)) {
 		delete newStud;
 		return false;
 	}
-	this->studentsPowers->insert(newStud, NULL);
 	delete newStud;
 	this->updateMostPowerful();
 	return true;
@@ -118,6 +118,7 @@ bool Xmen::moveStudentToTeam(int studentID, int teamID) {
 		delete newStud;
 		return false;
 	}
+	delete newStud;
 	dummy2->team = team;
 	dummy->team = team;
 	this->updateMostPowerful(team);
