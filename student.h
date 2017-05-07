@@ -15,7 +15,7 @@ public:
   void updateTeam(Team* team){
 	  this->team=team;
    }
-  Student(int id, int grade, int power);
+  Student(int id, int grade, int power,team);
   Student(Student& student);
   ~Student();
 };

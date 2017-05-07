@@ -1,6 +1,6 @@
 #include "student.h"
 
-Student::Student(int id, int grade, int power): ID(id), grade(grade), PWR(power), team(NULL){
+Student::Student(int id, int grade, int power,Team *team): ID(id), grade(grade), PWR(power), team(NULL){
 
 }
 
