@@ -98,7 +98,7 @@ bool Xmen::removeStudent(int studentID) {
 	}
 	return true;
 }
-//moveStudent to team
+
 bool Xmen::moveStudentToTeam(int studentID, int teamID) {
 	Student *dummy = NULL;
 	Student *dummy2 = this->findStudent(studentID, &dummy);
@@ -121,7 +121,7 @@ bool Xmen::moveStudentToTeam(int studentID, int teamID) {
 	dummy2->team = team;
 	dummy->team = team;
 	this->updateMostPowerful(team);
-	return 0;
+	return true;
 }
 //////////////////////////////////////////////-------------------------------------------
 void Xmen::increaseLevel(int studentID, int levelIncrease) { // changed from bool to void

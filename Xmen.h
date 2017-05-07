@@ -19,6 +19,8 @@ public:
   AVLtree<Team, Team, compByTeamID> *teams;
   AVLtree<Student, Student, compByStudentID> *students;
   AVLtree<Student, Student, compByStudentPower> *studentsPowers;
+  Xmen();
+  ~Xmen();
 
   //addStudent function: inserts a new student in both student trees(sorted by ID and Power)
   //returns true if SUCCESS and false otherwise.
@@ -74,7 +76,4 @@ public:
   //updateMostPowerful function: updates the most powerful student in
   //the whole school
   void updateMostPowerful();
-
-  Xmen();
-  ~Xmen();
 };
