@@ -6,7 +6,6 @@
 #include <iostream>
 
 class Student;
-class OwnedStudent;
 class compByStudentPower;
 
 
@@ -15,7 +14,7 @@ public:
 	int ID;
 	int mostPowerfulID;
 	int mostPowerfulPower;
-	AVLtree<OwnedStudent, OwnedStudent, compByStudentPower>* ownStudents;
+	AVLtree<Student, Student, compByStudentPower>* ownStudents;
 	Team(int id);
 	Team(Team& team);
 	~Team();

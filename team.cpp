@@ -1,4 +1,3 @@
-#include "magizoologist.h"
 
 std::ostream& operator<<(std::ostream& os, const Team& team)
 {
