@@ -281,12 +281,13 @@ Student* mergeStudentsArrays(Student *a, int n, Student *b, int m) {
 }
 
 //not sure about this function..
+/*
 void arrayToAVL(Student *array,AVLtree<Student, Student, compByStudentPower> *tree){
-	Student** newTreeArray = tree->inorderNodes(NULL); //save the pointers to the tree nodes
+	AVLNode** newTreeArray = tree->inorderNodes(NULL); //save the pointers to the tree nodes
 	for(int i=0;i<tree->numOfElements;++i){//update all the nodes.
 		newTreeArray[i]=array[i];
 		array[i]=NULL;
 	}
 		delete[] newTreeArray;
-}
+}*/
 
