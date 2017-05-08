@@ -28,8 +28,8 @@ bool Xmen::addTeam(int teamID) {
 //adds the student to both of the trees,updates the MostPowerful if needed
 bool Xmen::addStudent(int studentID, int grade, int power) {
 	Student* newStud = new Student(studentID, grade, power);
-	if (!this->students->insert(newStud, NULL) ||
-			this->studentsPowers->insert(newStud, NULL)) {
+	if (!this->students->insert(newStud, NULL)
+			|| this->studentsPowers->insert(newStud, NULL)) {
 		delete newStud;
 		return false;
 	}
@@ -126,18 +126,17 @@ bool Xmen::moveStudentToTeam(int studentID, int teamID) {
 }
 //////////////////////////////////////////////-------------------------------------------
 /*void Xmen::increaseLevel(int studentID, int levelIncrease) { // changed from bool to void
-	Student *dummy = NULL;
-	Student *creature = this->findCreature(studentID, &dummy);
-	if (!creature) { //no such creature
-		return false;
-	}
-	int newLevel = (creature->LVL + levelIncrease);
-	Team *magi = creature->magi;
-	this->releaseCreature(studentID);
-	this->insertCreature(studentID, (magi->ID), newLevel);
-}*/
+ Student *dummy = NULL;
+ Student *creature = this->findCreature(studentID, &dummy);
+ if (!creature) { //no such creature
+ return false;
+ }
+ int newLevel = (creature->LVL + levelIncrease);
+ Team *magi = creature->magi;
+ this->releaseCreature(studentID);
+ this->insertCreature(studentID, (magi->ID), newLevel);
+ }*/
 //////////////////////////////////////////////-------------------------------------------
-
 int Xmen::getMostPowerful() {
 	if (this->students->numOfElements == 0) {
 		return -1;
@@ -217,3 +216,77 @@ void Xmen::updateMostPowerful() {
 	this->mostPowerfulID = iterator->keyValue->ID;
 	this->mostPowerfulPower = iterator->keyValue->PWR;
 }
+//-------------------------------------------------------------------------------
+void inOrderCount(
+		AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator,
+		int grade, int *counter) {
+	if (!iterator) {
+		return;
+	}
+	inOrderCount(iterator->left, grade, counter);
+	if (iterator->keyValue->grade == grade) {
+		(*counter)++;
+	}
+	inOrderCount(iterator->right, grade, counter);
+}
+
+void inOrderUpdate(
+		AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator,
+		int grade, int powerInc) {
+	if (!iterator) {
+		return;
+	}
+	inOrderUpdate(iterator->left, grade, powerInc);
+	if (iterator->keyValue->grade == grade) {
+		iterator->keyValue->grade += powerInc;
+	}
+	inOrderUpdate(iterator->right, grade, powerInc);
+}
+
+void inOrderSplit(
+		AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator,
+		int grade, Student *a, int n, Student *b, int m) {//first call to func(n=m=0)
+	if (!iterator) {
+		return;
+	}
+	inOrderSplit(iterator->left, grade, a, n, b, m);
+	if (iterator->keyValue->grade == grade) { // students in grade go to A array
+		a[n++] = iterator->keyValue;
+	} else {	// students not in grade go to B array
+		b[m++] = iterator->keyValue;
+	}
+	inOrderSplit(iterator->right, grade, a, n, b, m);
+}	//dont forget to inc the A array by given INC
+
+Student* mergeStudentsArrays(Student *a, int n, Student *b, int m) {
+	Student *newArray = new Student[n + m];//maybe we should alloc the output array in the wrap func? so we can delete it easily
+	int i = 0, j = 0, k = 0;
+	while (i < n && j < m) {
+		if (a[i].PWR > b[i].PWR) {
+			newArray[k++] = b[j++];
+		} else {
+			newArray[k++] = a[i++];
+		}
+	}
+	if (i < m) {
+		for (int p = i; p < n; p++) {
+			newArray[k++] = a[p];
+		}
+	} else {
+		for (int p = j; p < m; p++) {
+			newArray[k++] = b[p];
+		}
+	}
+	return newArray;
+}
+
+//not sure about this function..
+void arrayToAVL(Student *array,AVLtree<Student, Student, compByStudentPower> *tree){
+	Student** newTreeArray = tree->inorderNodes(NULL); //save the pointers to the tree nodes
+	for(int i=0;i<tree->numOfElements;++i){//update all the nodes.
+		newTreeArray[i]=array[i];
+		array[i]=NULL;
+	}
+		delete[] newTreeArray;
+}
+
