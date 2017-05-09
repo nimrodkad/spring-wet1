@@ -686,48 +686,18 @@ public:
     }
   }
 //________________________________________________________________________
-//  merge AVLtrees.
+//  makes a new tree with a given array of nodes
 //________________________________________________________________________
-//  This function operates on two AVLtrees. It returns a new AVLtree with
-//  the elements from the two trees.
-//  !!This function deletes the two trees!!
+//  This function operates on array of nodes. It returns a new AVLtree with
+//  the elements from array.
 //________________________________________________________________________
-  AVLtree* merge(AVLtree** tree){
-    //allocate the new tree
-    AVLtree* newTree = new AVLtree(this->numOfElements+(*tree)->numOfElements);
-    //get arrays of nodes from the two trees.
-    AVLNode** thisTreeArray = this->inorderNodes(NULL);
-    AVLNode** otherTreeArray = (*tree)->inorderNodes(NULL);
-    AVLNode** mergedTreeArray;
-    bool mergedTreeArrayAllocated = false;//for deletion
-    //check empty tree cases
-    if(thisTreeArray==NULL&&otherTreeArray!=NULL){
-      mergedTreeArray = otherTreeArray;
-    }else if(thisTreeArray!=NULL&&otherTreeArray==NULL){
-      mergedTreeArray = thisTreeArray;
-    }else if(thisTreeArray==NULL&&otherTreeArray==NULL){
-      return newTree;
-    }else{//both trees have elements
-      //allocate array for the merged nodes. 
-      mergedTreeArray = new AVLNode*[this->numOfElements+(*tree)->numOfElements];
-      mergedTreeArrayAllocated = true; // for deletion
-      }
-      //merge the arrays.
-      this->mergeNodesArrays(thisTreeArray,otherTreeArray,mergedTreeArray,this->numOfElements,(*tree)->numOfElements);
+  AVLtree* arrayToTree(AVLNode** treeArray,int size){
+	  AVLtree* newTree = new AVLtree(size); //makes a new empty tree
       AVLNode** newTreeArray = newTree->inorderNodes(NULL);//get empty nodes from the new tree.
-      for(int i=0;i<this->numOfElements+(*tree)->numOfElements;++i){//update all the nodes.
-        newTreeArray[i]->keyValue=mergedTreeArray[i]->keyValue;
-        mergedTreeArray[i]->keyValue=NULL;
+      for(int i=0;i<size;++i){//update all the nodes.
+        newTreeArray[i]->keyValue=treeArray[i]->keyValue;
+        treeArray[i]->keyValue=NULL;
       }
-      if(mergedTreeArrayAllocated){//deallocate the merged array if needed
-        delete[] mergedTreeArray;
-      }
-      //delete arrays and old trees.
-      delete[] thisTreeArray; 
-      delete[] otherTreeArray;
-      delete[] newTreeArray;
-      delete this;
-      delete (*tree);
       return newTree;
   }
 //________________________________________________________________________

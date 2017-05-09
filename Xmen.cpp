@@ -216,7 +216,10 @@ void Xmen::updateMostPowerful() {
 	this->mostPowerfulID = iterator->keyValue->ID;
 	this->mostPowerfulPower = iterator->keyValue->PWR;
 }
+
 //-------------------------------------------------------------------------------
+
+//function for counting the amount of students in a given grade
 void inOrderCount(
 		AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator,
 		int grade, int *counter) {
@@ -230,6 +233,7 @@ void inOrderCount(
 	inOrderCount(iterator->right, grade, counter);
 }
 
+//function for updating the new power of students in a given grade
 void inOrderUpdate(
 		AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator,
 		int grade, int powerInc) {
@@ -243,9 +247,10 @@ void inOrderUpdate(
 	inOrderUpdate(iterator->right, grade, powerInc);
 }
 
+//function that puts the studens in given grade in A array, others in B array.
 void inOrderSplit(
 		AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator,
-		int grade, Student *a, int n, Student *b, int m) {//first call to func(n=m=0)
+		int grade, Student **a, int n, Student **b, int m) {//first call to func(n=m=0)
 	if (!iterator) {
 		return;
 	}
@@ -258,11 +263,12 @@ void inOrderSplit(
 	inOrderSplit(iterator->right, grade, a, n, b, m);
 }	//dont forget to inc the A array by given INC
 
-Student* mergeStudentsArrays(Student *a, int n, Student *b, int m) {
-	Student *newArray = new Student[n + m];//maybe we should alloc the output array in the wrap func? so we can delete it easily
+//function for merging two students arrays(already sorted) into one sorted array.
+Student** mergeStudentsArrays(Student **a, int n, Student **b, int m) {
+	Student **newArray = new Student*[n + m];//maybe we should alloc the output array in the wrap func? so we can delete it easily
 	int i = 0, j = 0, k = 0;
 	while (i < n && j < m) {
-		if (a[i].PWR > b[i].PWR) {
+		if (a[i]->PWR > b[i]->PWR) {
 			newArray[k++] = b[j++];
 		} else {
 			newArray[k++] = a[i++];
@@ -279,15 +285,3 @@ Student* mergeStudentsArrays(Student *a, int n, Student *b, int m) {
 	}
 	return newArray;
 }
-
-//not sure about this function..
-/*
-void arrayToAVL(Student *array,AVLtree<Student, Student, compByStudentPower> *tree){
-	AVLNode** newTreeArray = tree->inorderNodes(NULL); //save the pointers to the tree nodes
-	for(int i=0;i<tree->numOfElements;++i){//update all the nodes.
-		newTreeArray[i]=array[i];
-		array[i]=NULL;
-	}
-		delete[] newTreeArray;
-}*/
-
