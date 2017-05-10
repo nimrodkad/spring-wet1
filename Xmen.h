@@ -76,4 +76,5 @@ public:
   //updateMostPowerful function: updates the most powerful student in
   //the whole school
   void updateMostPowerful();
+
 };

@@ -5,6 +5,15 @@
 
 #define DOESNT_EXIST -2
 
+void inOrderUpdate(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, int powerInc);
+void inOrderUpdate(AVLtree<Student, Student, compByStudentID>::AVLNode *iterator, int grade, int powerInc);
+void inOrderCount(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, int *counter);
+void inOrderSplit(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, Student **a, int n, Student **b, int m);
+void mergeStudentsArrays(Student **a, int n, Student **b, int m, Student** c);
+AVLtree<Student, Student, compByStudentPower>* arrayToTree(Student** treeArray,int size);
+void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, int powerIncrease);
+void inOrderTeams(AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease);
+
 Xmen::Xmen() :
 		mostPowerfulID(-1), mostPowerfulPower(-1) {
 	teams = new AVLtree<Team, Team, compByTeamID>();
@@ -125,17 +134,11 @@ bool Xmen::moveStudentToTeam(int studentID, int teamID) {
 	return true;
 }
 //////////////////////////////////////////////-------------------------------------------
-/*void Xmen::increaseLevel(int studentID, int levelIncrease) { // changed from bool to void
- Student *dummy = NULL;
- Student *creature = this->findCreature(studentID, &dummy);
- if (!creature) { //no such creature
- return false;
- }
- int newLevel = (creature->LVL + levelIncrease);
- Team *magi = creature->magi;
- this->releaseCreature(studentID);
- this->insertCreature(studentID, (magi->ID), newLevel);
- }*/
+void Xmen::increaseLevel(int grade, int powerIncrease) { // changed from bool to void
+    inOrderUpdate(students->root, grade, powerIncrease);
+    updateTree(studentsPowers, grade, powerIncrease);
+    inOrderTeams(teams->root, grade, powerIncrease);
+}
 //////////////////////////////////////////////-------------------------------------------
 int Xmen::getMostPowerful() {
 	if (this->students->numOfElements == 0) {
@@ -247,6 +250,19 @@ void inOrderUpdate(
 	inOrderUpdate(iterator->right, grade, powerInc);
 }
 
+void inOrderUpdate(
+		AVLtree<Student, Student, compByStudentID>::AVLNode *iterator,
+		int grade, int powerInc) {
+	if (!iterator) {
+		return;
+	}
+	inOrderUpdate(iterator->left, grade, powerInc);
+	if (iterator->keyValue->grade == grade) {
+		iterator->keyValue->grade += powerInc;
+	}
+	inOrderUpdate(iterator->right, grade, powerInc);
+}
+
 //function that puts the studens in given grade in A array, others in B array.
 void inOrderSplit(
 		AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator,
@@ -264,24 +280,70 @@ void inOrderSplit(
 }	//dont forget to inc the A array by given INC
 
 //function for merging two students arrays(already sorted) into one sorted array.
-Student** mergeStudentsArrays(Student **a, int n, Student **b, int m) {
-	Student **newArray = new Student*[n + m];//maybe we should alloc the output array in the wrap func? so we can delete it easily
+void mergeStudentsArrays(Student **a, int n, Student **b, int m, Student** c) {
 	int i = 0, j = 0, k = 0;
 	while (i < n && j < m) {
 		if (a[i]->PWR > b[i]->PWR) {
-			newArray[k++] = b[j++];
+			c[k++] = b[j++];
 		} else {
-			newArray[k++] = a[i++];
+			c[k++] = a[i++];
 		}
 	}
 	if (i < m) {
 		for (int p = i; p < n; p++) {
-			newArray[k++] = a[p];
+			c[k++] = a[p];
 		}
 	} else {
 		for (int p = j; p < m; p++) {
-			newArray[k++] = b[p];
+			c[k++] = b[p];
 		}
 	}
-	return newArray;
+}
+
+//________________________________________________________________________
+//  makes a new tree with a given array of nodes
+//________________________________________________________________________
+//  This function operates on array of nodes. It returns a new AVLtree with
+//  the elements from array.
+//________________________________________________________________________
+AVLtree<Student, Student, compByStudentPower>* arrayToTree(Student** treeArray,int size){
+	  AVLtree<Student, Student, compByStudentPower>* newTree = new AVLtree<Student, Student, compByStudentPower>(size); //makes a new empty tree
+      AVLtree<Student, Student, compByStudentPower>::AVLNode** newTreeArray = newTree->inorderNodes(NULL);//get empty nodes from the new tree.
+      for(int i=0;i<size;++i){//update all the nodes.
+        newTreeArray[i]->keyValue=treeArray[i];
+        treeArray[i]=NULL;
+      }
+      return newTree;
+  }
+
+void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, int powerIncrease)
+{
+    if(!tree) return;
+    int counter = 0;
+    inOrderCount(tree->root, grade, &counter);
+    if(!counter) return;
+    int numElements = tree->numOfElements;
+    if(counter == numElements)
+    {
+        inOrderUpdate(tree->root, grade, powerIncrease);
+        return;
+    }
+    Student** A = new Student*[counter];
+    Student** B = new Student*[numElements-counter];
+    Student** C = new Student*[numElements];
+    inOrderSplit(tree->root, grade, A, 0, B, 0);
+    for(int i=0; i<counter; i++) A[i]->PWR += powerIncrease;
+    mergeStudentsArrays(A, counter, B, numElements-counter, C);
+    tree = arrayToTree(C, numElements);
+    delete[] A;
+    delete[] B;
+    delete[] C;
+}
+
+void inOrderTeams(AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease)
+{
+    if(!root) return;
+    inOrderTeams(root->left, grade, powerIncrease);
+    updateTree(root->keyValue->ownStudents, grade, powerIncrease);
+    inOrderTeams(root->right, grade, powerIncrease);
 }
