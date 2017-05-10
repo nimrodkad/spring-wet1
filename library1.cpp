@@ -133,7 +133,8 @@ StatusType IncreaseLevel(void *DS, int Grade, int PowerIncrease) {
 		return INVALID_INPUT;
 	}
 	try {
-		((Xmen*) DS)->increaseLevel(Grade, PowerIncrease);
+		//((Xmen*) DS)->increaseLevel(Grade,
+		//		PowerIncrease);;
 	} catch (std::bad_alloc &b) {
 		return ALLOCATION_ERROR;
 	}
