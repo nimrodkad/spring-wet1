@@ -124,19 +124,12 @@ bool Xmen::moveStudentToTeam(int studentID, int teamID) {
 	this->updateMostPowerful(team);
 	return true;
 }
-//////////////////////////////////////////////-------------------------------------------
-/*void Xmen::increaseLevel(int studentID, int levelIncrease) { // changed from bool to void
-	Student *dummy = NULL;
-	Student *creature = this->findCreature(studentID, &dummy);
-	if (!creature) { //no such creature
-		return false;
-	}
-	int newLevel = (creature->LVL + levelIncrease);
-	Team *magi = creature->magi;
-	this->releaseCreature(studentID);
-	this->insertCreature(studentID, (magi->ID), newLevel);
-}*/
-//////////////////////////////////////////////-------------------------------------------
+
+void Xmen::increaseLevel(int grade, int powerIncrease) {
+    //ID Tree Part
+    students->inOrderUpdate(grade, powerIncrease);
+
+}
 
 int Xmen::getMostPowerful() {
 	if (this->students->numOfElements == 0) {

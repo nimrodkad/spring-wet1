@@ -1,0 +1,54 @@
+# depslib dependency file v1.0
+1494250648 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\library1.cpp
+	"library1.h"
+	"Xmen.h"
+	<iostream>
+
+1493725202 c:\users\nimrod\onedrive\cs\ds\spring-wet1\library1.h
+
+1494256854 c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen.h
+	"AVLtree.h"
+	"student.h"
+	"team.h"
+	"utils.h"
+	<iostream>
+
+1493724933 c:\users\nimrod\onedrive\cs\ds\spring-wet1\avltree.h
+	<iostream>
+	<cmath>
+	<cassert>
+	"utils.h"
+
+1480924276 c:\users\nimrod\onedrive\cs\ds\spring-wet1\utils.h
+
+1494250648 c:\users\nimrod\onedrive\cs\ds\spring-wet1\student.h
+	"team.h"
+
+1494250648 c:\users\nimrod\onedrive\cs\ds\spring-wet1\team.h
+	"AVLtree.h"
+	"student.h"
+	<iostream>
+
+1493725224 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\main1.cpp
+	<assert.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"library1.h"
+	<iostream>
+
+1494250648 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\student.cpp
+	"student.h"
+
+1494250648 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\team.cpp
+	"team.h"
+
+1480924276 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\utils.cpp
+	"utils.h"
+
+1494257039 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen.cpp
+	"Xmen.h"
+	"utils.h"
+	<cassert>
+	<cstdlib>
+

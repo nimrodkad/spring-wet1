@@ -25,10 +25,10 @@
 //________________________________________________________________________
 //  key : The type of key objects in the tree. The key type must
 //  implement a copy constructor.
-//  type : The type of elements in the tree. The type must 
+//  type : The type of elements in the tree. The type must
 //  implement a copy constructor
-//  compare: A comparator for the key type. It should implement the 
-//  operator(key1,key2) and return true iff key1<key2. 
+//  compare: A comparator for the key type. It should implement the
+//  operator(key1,key2) and return true iff key1<key2.
 //________________________________________________________________________
 template <typename key, typename type, typename compare> class AVLtree {
 public:
@@ -36,8 +36,8 @@ public:
 //  AVL node class.
 //________________________________________________________________________
 //  Simply implements a node in the AVL tree. It has trivial constructors
-//  and a function that calculates the height and balance. Its 
-//  destructor also destructs the key and value objects. 
+//  and a function that calculates the height and balance. Its
+//  destructor also destructs the key and value objects.
 //________________________________________________________________________
   class AVLNode {
   public:
@@ -87,7 +87,7 @@ public:
 //  AVL tree constructor.
 //________________________________________________________________________
 //  Simply constructs an AVL tree. Notice that it allocates memory for
-//  the key and value. 
+//  the key and value.
 //________________________________________________________________________
   AVLtree() : comp(), numOfElements(0) {
     root = new AVLNode();
@@ -126,7 +126,7 @@ public:
 //________________________________________________________________________
 //  This function should be used on a full empty AVL tree built with
 //  the buildEmptyTree() function. It deletes the leaves to get a half
-//  full AVL tree with -size- nodes. 
+//  full AVL tree with -size- nodes.
 //________________________________________________________________________
   void deleteNodes(int size) {
     int numOfNodes = 0;
@@ -150,7 +150,7 @@ public:
     }
     delete[] array;
     //update all nodes height and balance.
-    AVLNode **upadatingArray = this->postorder(); 
+    AVLNode **upadatingArray = this->postorder();
     for (int i = 0; i < size; ++i) {
       upadatingArray[i]->calculateHeightAndBalance();
     }
@@ -169,7 +169,7 @@ public:
     if (size != 0) { // if you want an empty tree with no nodes.
       int height = floor(log2(size));
       buildEmptyTree(root, height); //build full tree.
-      numOfElements = exp2(height+1)-1; 
+      numOfElements = exp2(height+1)-1;
       this->deleteNodes(size);  //delete leaves.
     }else{
       numOfElements = 0;
@@ -191,7 +191,7 @@ public:
 //________________________________________________________________________
 //  This function finds a node with the -k- key. You should supply it with
 //  a root (in the first argument), the key to find (the second argument)
-//  and an address to AVLNode* to return to you the last node in the 
+//  and an address to AVLNode* to return to you the last node in the
 //  path.
 //________________________________________________________________________
   AVLNode *find(AVLNode *node, key *k, AVLNode **lastNode) {
@@ -436,9 +436,9 @@ public:
 //  This function removes an element from the tree. It returns true if
 //  the element was removed and false otherwise.
 //  Notice that it can remove only with the removeLeaf() and
-//  removeOnlyOneSon() functions so it switches the keys if the node has 
-//  two sons to meet the requirements of those functions. then it calls 
-//  the remove(AVLNode* node,AVLNode* lastNode) function to finish 
+//  removeOnlyOneSon() functions so it switches the keys if the node has
+//  two sons to meet the requirements of those functions. then it calls
+//  the remove(AVLNode* node,AVLNode* lastNode) function to finish
 //  the removal.
 //________________________________________________________________________
   bool remove(key *k) { // remove function
@@ -472,7 +472,7 @@ public:
       } else { // result has two sons
         AVLNode *replacement = NULL;
         replacement = result->right;
-        while (replacement->left) {//find the next node. 
+        while (replacement->left) {//find the next node.
           replacement = replacement->left;
         }
         //switch keys
@@ -510,7 +510,7 @@ public:
 //________________________________________________________________________
 //  Remove a node (only leaf or a node with one son).
 //________________________________________________________________________
-//  This function is used in the remove(key *k) function to remove a node with 
+//  This function is used in the remove(key *k) function to remove a node with
 //  two sons after the replacment of keys(see remove(key *k) documentation).
 //  You should suppy it with the last node in the path.
 //________________________________________________________________________
@@ -538,7 +538,7 @@ public:
       } else  { // node has only left son
         this->removeOnlyOneSon(node, comp, LEFT);
         --(this->numOfElements);
-      } 
+      }
       //fixing AVL tree.
       while (lastNode != this->dummy) { // go over the path to root
         int oldHeight = lastNode->height;
@@ -707,7 +707,7 @@ public:
     }else if(thisTreeArray==NULL&&otherTreeArray==NULL){
       return newTree;
     }else{//both trees have elements
-      //allocate array for the merged nodes. 
+      //allocate array for the merged nodes.
       mergedTreeArray = new AVLNode*[this->numOfElements+(*tree)->numOfElements];
       mergedTreeArrayAllocated = true; // for deletion
       }
@@ -722,12 +722,20 @@ public:
         delete[] mergedTreeArray;
       }
       //delete arrays and old trees.
-      delete[] thisTreeArray; 
+      delete[] thisTreeArray;
       delete[] otherTreeArray;
       delete[] newTreeArray;
       delete this;
       delete (*tree);
       return newTree;
+  }
+
+  int inOrderCount(int grade){
+    return 0;
+  }
+
+  void inOrderSplit(int grade, AVLNode::keyValue* A, AVLNode::keyValue* B){
+
   }
 //________________________________________________________________________
 //  AVLtree destructor
