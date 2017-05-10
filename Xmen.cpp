@@ -38,7 +38,7 @@ bool Xmen::addTeam(int teamID) {
 bool Xmen::addStudent(int studentID, int grade, int power) {
 	Student* newStud = new Student(studentID, grade, power);
 	if (!this->students->insert(newStud, NULL)
-			|| this->studentsPowers->insert(newStud, NULL)) {
+			|| !this->studentsPowers->insert(newStud, NULL)) {
 		delete newStud;
 		return false;
 	}
