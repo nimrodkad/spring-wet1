@@ -14,8 +14,7 @@ AVLtree<Student, Student, compByStudentPower>* arrayToTree(Student** treeArray,i
 void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, int powerIncrease);
 void inOrderTeams(AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease);
 
-Xmen::Xmen() :
-		mostPowerfulID(-1), mostPowerfulPower(-1) {
+Xmen::Xmen() : mostPowerfulID(-1), mostPowerfulPower(-1) {
 	teams = new AVLtree<Team, Team, compByTeamID>();
 	students = new AVLtree<Student, Student, compByStudentID>;
 	studentsPowers = new AVLtree<Student, Student, compByStudentPower>;
@@ -133,13 +132,13 @@ bool Xmen::moveStudentToTeam(int studentID, int teamID) {
 	this->updateMostPowerful(team);
 	return true;
 }
-//////////////////////////////////////////////-------------------------------------------
+
 void Xmen::increaseLevel(int grade, int powerIncrease) { // changed from bool to void
     inOrderUpdate(students->root, grade, powerIncrease);
     updateTree(studentsPowers, grade, powerIncrease);
     inOrderTeams(teams->root, grade, powerIncrease);
 }
-//////////////////////////////////////////////-------------------------------------------
+
 int Xmen::getMostPowerful() {
 	if (this->students->numOfElements == 0) {
 		return -1;
