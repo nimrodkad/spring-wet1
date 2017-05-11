@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1494324066 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\library1.cpp
+1494501219 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\library1.cpp
 	"library1.h"
 	"Xmen.h"
 	<iostream>
@@ -45,4 +45,10 @@
 
 1494324066 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\utils.cpp
 	"utils.h"
+
+1494501352 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen.cpp
+	"Xmen.h"
+	"utils.h"
+	<cassert>
+	<cstdlib>
 
