@@ -342,7 +342,7 @@ void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, 
     Student** A = new Student*[counter]; //students in given grade array
     Student** B = new Student*[numElements-counter]; //other students array
     Student** C = new Student*[numElements]; //array for the merged arrays.
-    assert(!A && !B && !C); //check if there is no alloc errors
+    assert(A && B && C); //check if there is no alloc errors
     int n=0,m=0;
     inOrderSplit(tree->root, grade, A, &n, B, &m); //fills the A and B array
     for(int i=0; i<counter; i++) A[i]->PWR += powerIncrease;
