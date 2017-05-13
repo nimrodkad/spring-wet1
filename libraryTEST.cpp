@@ -154,7 +154,7 @@ int main() {
 	GetMostPowerfulTest();
 	RemoveStudentTest();
 	GetAllStudentsByPowerTest();
-	IncreaseLevelTest();
+	//IncreaseLevelTest();
 	return 0;
 }
 
