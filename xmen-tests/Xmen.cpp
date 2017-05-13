@@ -8,12 +8,13 @@
 void inOrderUpdate(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, int powerInc);
 void inOrderUpdate(AVLtree<Student, Student, compByStudentID>::AVLNode *iterator, int grade, int powerInc);
 void inOrderCount(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, int *counter);
-void inOrderSplit(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, Student **a, int n, Student **b, int m);
+void inOrderSplit(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, Student **a, int *n, Student **b, int *m);
 void mergeStudentsArrays(Student **a, int n, Student **b, int m, Student** c);
 AVLtree<Student, Student, compByStudentPower>* arrayToTree(Student** treeArray,int size);
 void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, int powerIncrease);
 void inOrderTeams(AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease);
 void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentID>::AVLNode *iterator);
+void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator);
 
 Xmen::Xmen() : mostPowerfulID(-1), mostPowerfulPower(-1) {
 	teams = new AVLtree<Team, Team, compByTeamID>();
@@ -271,17 +272,26 @@ void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentID>::AVLNode *i
 		inOrderUpdateStudent(iterator->right);
 }
 
+void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator){
+		if(!iterator){
+			return;
+		}
+		inOrderUpdateStudent(iterator->left);
+		iterator->keyValue=NULL;
+		inOrderUpdateStudent(iterator->right);
+}
+
 void inOrderSplit(
 		AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator,
-		int grade, Student **a, int n, Student **b, int m) {//first call to func(n=m=0)
+		int grade, Student **a, int *n, Student **b, int *m) {//first call to func(n=m=0)
 	if (!iterator) {
 		return;
 	}
 	inOrderSplit(iterator->left, grade, a, n, b, m);
 	if (iterator->keyValue->grade == grade) { // students in grade go to A array
-		a[n++] = iterator->keyValue;
+		a[(*n)++] = iterator->keyValue;
 	} else {	// students not in grade go to B array
-		b[m++] = iterator->keyValue;
+		b[(*m)++] = iterator->keyValue;
 	}
 	inOrderSplit(iterator->right, grade, a, n, b, m);
 }	//dont forget to inc the A array by given INC
@@ -289,22 +299,16 @@ void inOrderSplit(
 //function for merging two students arrays(already sorted) into one sorted array.
 void mergeStudentsArrays(Student **a, int n, Student **b, int m, Student** c) {
 	int i = 0, j = 0, k = 0;
-	while (i < n && j < m) {
-		if (a[i]->PWR > b[i]->PWR) {
-			c[k++] = b[j++];
-		} else {
-			c[k++] = a[i++];
-		}
-	}
-	if (i < m) {
-		for (int p = i; p < n; p++) {
-			c[k++] = a[p];
-		}
-	} else {
-		for (int p = j; p < m; p++) {
-			c[k++] = b[p];
-		}
-	}
+
+    while (i < n && j < m)
+       c[k++] = a[i]->PWR < b[j]->PWR ? a[i++] : b[j++];
+
+    while (i < n)
+        c[k++] = a[i++];
+
+
+    while (j < m)
+        c[k++] = b[j++];
 }
 
 //________________________________________________________________________
@@ -335,13 +339,18 @@ void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, 
         inOrderUpdate(tree->root, grade, powerIncrease);
         return;
     }
+    AVLtree<Student, Student, compByStudentPower> *newTree;
     Student** A = new Student*[counter]; //students in given grade array
     Student** B = new Student*[numElements-counter]; //other students array
     Student** C = new Student*[numElements]; //array for the merged arrays.
-    inOrderSplit(tree->root, grade, A, 0, B, 0); //fills the A and B array
+    int n=0,m=0;
+    inOrderSplit(tree->root, grade, A, &n, B, &m); //fills the A and B array
     for(int i=0; i<counter; i++) A[i]->PWR += powerIncrease;
     mergeStudentsArrays(A, counter, B, numElements-counter, C); //merge array into C array
-    tree = arrayToTree(C, numElements);
+    newTree = arrayToTree(C, numElements);
+    inOrderUpdateStudent(tree->root); //puts null in the nodes of the tree before destruction
+    delete tree;
+    tree=newTree; //not sure if we can do this - or we need to return it from the function out
     delete[] A;
     delete[] B;
     delete[] C;

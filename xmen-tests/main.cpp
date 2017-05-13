@@ -129,11 +129,11 @@ void IncreaseLevelTest(){
 	Xmen *xmen = new Xmen();
 	int studentID;
     assert(AddStudent(xmen, 1, 1, 1) == SUCCESS);
-    assert(AddStudent(xmen, 2, 1, 0) == SUCCESS);
+    assert(AddStudent(xmen, 2, 1, 2) == SUCCESS);
     assert(AddStudent(xmen, 3, 3, 3) == SUCCESS);
     assert(AddStudent(xmen, 4, 4, 4) == SUCCESS);
     assert(IncreaseLevel(NULL,1,1)==INVALID_INPUT);
-    assert(IncreaseLevel(xmen,0,1)==INVALID_INPUT);
+    assert(IncreaseLevel(xmen,-1,1)==INVALID_INPUT);
     assert(IncreaseLevel(xmen,1,-1)==INVALID_INPUT);
     assert(IncreaseLevel(xmen,3,2)==SUCCESS);
     assert(GetMostPowerful(xmen, -1, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
@@ -156,7 +156,7 @@ int main() {
 	GetMostPowerfulTest();
 	RemoveStudentTest();
 	GetAllStudentsByPowerTest();
-	//IncreaseLevelTest();
+	IncreaseLevelTest();
 	return 0;
 }
 

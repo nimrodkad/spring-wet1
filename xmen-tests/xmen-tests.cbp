@@ -32,7 +32,18 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="AVLtree.h" />
+		<Unit filename="Xmen.cpp" />
+		<Unit filename="Xmen.h" />
+		<Unit filename="library1.cpp" />
+		<Unit filename="library1.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="student.cpp" />
+		<Unit filename="student.h" />
+		<Unit filename="team.cpp" />
+		<Unit filename="team.h" />
+		<Unit filename="utils.cpp" />
+		<Unit filename="utils.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
