@@ -90,7 +90,7 @@ bool Xmen::removeStudent(int studentID) {
 	}
 	if (dummy2->team) { //has a team
 		Team *team = dummy2->team;
-		Student *ownedDummy = new Student(studentID, dummy2->PWR, 0);
+		Student *ownedDummy = new Student(studentID,dummy2->grade, dummy2->PWR);
 		team->ownStudents->remove(ownedDummy);
 		if (studentID == team->mostPowerfulID) {
 			this->updateMostPowerful(team);
