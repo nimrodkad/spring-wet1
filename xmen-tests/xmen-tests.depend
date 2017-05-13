@@ -1,0 +1,52 @@
+# depslib dependency file v1.0
+1494676828 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen-tests\library1.cpp
+	"library1.h"
+	"Xmen.h"
+	<iostream>
+
+1494324066 c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen-tests\library1.h
+
+1494676806 c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen-tests\xmen.h
+	"AVLtree.h"
+	"student.h"
+	"team.h"
+	"utils.h"
+	<iostream>
+
+1494678505 c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen-tests\avltree.h
+	<iostream>
+	<cmath>
+	<cassert>
+	"utils.h"
+
+1494324066 c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen-tests\utils.h
+
+1494324066 c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen-tests\student.h
+	"team.h"
+
+1494324066 c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen-tests\team.h
+	"AVLtree.h"
+	"student.h"
+	<iostream>
+
+1494678820 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen-tests\main.cpp
+	"library1.h"
+	"Xmen.h"
+	<cstdlib>
+	<iostream>
+
+1494324066 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen-tests\student.cpp
+	"student.h"
+
+1494324066 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen-tests\team.cpp
+	"team.h"
+
+1494324066 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen-tests\utils.cpp
+	"utils.h"
+
+1494678933 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen-tests\xmen.cpp
+	"Xmen.h"
+	"utils.h"
+	<cassert>
+	<cstdlib>
+
