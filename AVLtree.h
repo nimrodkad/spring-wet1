@@ -385,6 +385,7 @@ public:
     } else { // there is no right son, so I am the left son.
       leaf->parent->left = NULL;
     }
+    leaf->parent->calculateHeightAndBalance();
   }
 //________________________________________________________________________
 //  Remove a node with one son.
