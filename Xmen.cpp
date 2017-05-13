@@ -327,19 +327,19 @@ void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, 
     if(!tree) return;
     int counter = 0;
     inOrderCount(tree->root, grade, &counter); //count the number of student in the given grade
-    if(!counter) return;
+    if(!counter) return; //no students in this grade - finish
     int numElements = tree->numOfElements;
-    if(counter == numElements)
+    if(counter == numElements) //if all the students are from this grade
     {
         inOrderUpdate(tree->root, grade, powerIncrease);
         return;
     }
-    Student** A = new Student*[counter];
-    Student** B = new Student*[numElements-counter];
-    Student** C = new Student*[numElements];
-    inOrderSplit(tree->root, grade, A, 0, B, 0);
+    Student** A = new Student*[counter]; //students in given grade array
+    Student** B = new Student*[numElements-counter]; //other students array
+    Student** C = new Student*[numElements]; //array for the merged arrays.
+    inOrderSplit(tree->root, grade, A, 0, B, 0); //fills the A and B array
     for(int i=0; i<counter; i++) A[i]->PWR += powerIncrease;
-    mergeStudentsArrays(A, counter, B, numElements-counter, C);
+    mergeStudentsArrays(A, counter, B, numElements-counter, C); //merge array into C array
     tree = arrayToTree(C, numElements);
     delete[] A;
     delete[] B;
