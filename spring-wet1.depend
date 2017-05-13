@@ -1,19 +1,18 @@
 # depslib dependency file v1.0
-1494501219 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\library1.cpp
+1494709285 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\library1.cpp
 	"library1.h"
 	"Xmen.h"
 	<iostream>
 
 1494324066 c:\users\nimrod\onedrive\cs\ds\spring-wet1\library1.h
 
-1494451282 c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen.h
-	"AVLtree.h"
+1494709243 c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen.h
 	"student.h"
-	"team.h"
+	"AVLTree.h"
 	"utils.h"
 	<iostream>
 
-1494452009 c:\users\nimrod\onedrive\cs\ds\spring-wet1\avltree.h
+1494691199 c:\users\nimrod\onedrive\cs\ds\spring-wet1\avltree.h
 	<iostream>
 	<cmath>
 	<cassert>
@@ -46,9 +45,15 @@
 1494324066 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\utils.cpp
 	"utils.h"
 
-1494501352 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen.cpp
+1494711942 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen.cpp
 	"Xmen.h"
 	"utils.h"
 	<cassert>
 	<cstdlib>
+
+1494712151 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\librarytest.cpp
+	"library1.h"
+	"Xmen.h"
+	<cstdlib>
+	<iostream>
 

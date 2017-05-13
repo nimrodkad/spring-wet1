@@ -140,10 +140,10 @@ void IncreaseLevelTest(){
     assert(studentID == 3);
     assert(IncreaseLevel(xmen,1,6)==SUCCESS);
     assert(GetMostPowerful(xmen, -1, &studentID) == SUCCESS); //most powerful now is 1 with 7 power
-    assert(studentID == 1);
-    assert(RemoveStudent(xmen,1)==SUCCESS);
-    assert(GetMostPowerful(xmen, -1, &studentID) == SUCCESS); //most powerful now is 2 with 6 power
     assert(studentID == 2);
+    assert(RemoveStudent(xmen,2)==SUCCESS);
+    assert(GetMostPowerful(xmen, -1, &studentID) == SUCCESS); //most powerful now is 2 with 6 power
+    assert(studentID == 1);
     delete xmen;
     std::cout << "end of IncreaseLevelTest" << std::endl;
 }

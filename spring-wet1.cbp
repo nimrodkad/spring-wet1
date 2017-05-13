@@ -37,7 +37,7 @@
 		<Unit filename="Xmen.h" />
 		<Unit filename="library1.cpp" />
 		<Unit filename="library1.h" />
-		<Unit filename="main1.cpp" />
+		<Unit filename="libraryTEST.cpp" />
 		<Unit filename="student.cpp" />
 		<Unit filename="student.h" />
 		<Unit filename="team.cpp" />
