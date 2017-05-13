@@ -8,7 +8,7 @@
 void inOrderUpdate(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, int powerInc);
 void inOrderUpdate(AVLtree<Student, Student, compByStudentID>::AVLNode *iterator, int grade, int powerInc);
 void inOrderCount(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, int *counter);
-void inOrderSplit(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, Student **a, int n, Student **b, int m);
+void inOrderSplit(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, Student **a, int *n, Student **b, int *m);
 void mergeStudentsArrays(Student **a, int n, Student **b, int m, Student** c);
 AVLtree<Student, Student, compByStudentPower>* arrayToTree(Student** treeArray,int size);
 void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, int powerIncrease);
@@ -273,15 +273,17 @@ void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentPower>::AVLNode
 
 void inOrderSplit(
 		AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator,
-		int grade, Student **a, int n, Student **b, int m) {//first call to func(n=m=0)
+		int grade, Student **a, int *n, Student **b, int *m) {//first call to func(n=m=0)
 	if (!iterator) {
 		return;
 	}
 	inOrderSplit(iterator->left, grade, a, n, b, m);
 	if (iterator->keyValue->grade == grade) { // students in grade go to A array
-		a[n++] = iterator->keyValue;
+		a[*n] = iterator->keyValue;
+		(*n)++;
 	} else {	// students not in grade go to B array
-		b[m++] = iterator->keyValue;
+		b[*m] = iterator->keyValue;
+		(*m)++;
 	}
 	inOrderSplit(iterator->right, grade, a, n, b, m);
 }	//dont forget to inc the A array by given INC
@@ -318,8 +320,9 @@ AVLtree<Student, Student, compByStudentPower>* arrayToTree(Student** treeArray,i
       AVLtree<Student, Student, compByStudentPower>::AVLNode** newTreeArray = newTree->inorderNodes(NULL);//get empty nodes from the new tree.
       for(int i=0;i<size;++i){//update all the nodes.
         newTreeArray[i]->keyValue=treeArray[i];
-        treeArray[i]=NULL;
+        newTreeArray[i]->keyValue=NULL; //so we wont delete the students objects
       }
+      delete []newTreeArray;
       return newTree;
   }
 
@@ -339,13 +342,15 @@ void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, 
     Student** A = new Student*[counter]; //students in given grade array
     Student** B = new Student*[numElements-counter]; //other students array
     Student** C = new Student*[numElements]; //array for the merged arrays.
-    inOrderSplit(tree->root, grade, A, 0, B, 0); //fills the A and B array
+    assert(!A && !B && !C); //check if there is no alloc errors
+    int n=0,m=0;
+    inOrderSplit(tree->root, grade, A, &n, B, &m); //fills the A and B array
     for(int i=0; i<counter; i++) A[i]->PWR += powerIncrease;
     mergeStudentsArrays(A, counter, B, numElements-counter, C); //merge array into C array
     newTree = arrayToTree(C, numElements);
     inOrderUpdateStudent(tree->root); //puts null in the nodes of the tree before destruction
     delete tree;
-    tree=newTree; //not sure if we can do this - or we need to return it from the function out
+    tree=newTree; 										//not sure if we can do this - or we need to return it from the function out
     delete[] A;
     delete[] B;
     delete[] C;
