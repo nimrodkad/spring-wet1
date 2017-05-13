@@ -13,7 +13,7 @@ void mergeStudentsArrays(Student **a, int n, Student **b, int m, Student** c);
 AVLtree<Student, Student, compByStudentPower>* arrayToTree(Student** treeArray,int size);
 void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, int powerIncrease);
 void inOrderTeams(AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease);
-void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentID>::AVLNode *iterator);
+void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator);
 
 Xmen::Xmen() : mostPowerfulID(-1), mostPowerfulPower(-1) {
 	teams = new AVLtree<Team, Team, compByTeamID>();
@@ -261,7 +261,7 @@ void inOrderUpdate(
 }
 
 //the function puts NULL in the old tree pointers to student
-void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentID>::AVLNode *iterator){
+void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator){
 		if(!iterator){
 			return;
 		}
@@ -334,13 +334,17 @@ void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, 
         inOrderUpdate(tree->root, grade, powerIncrease);
         return;
     }
+    AVLtree<Student, Student, compByStudentPower> *newTree;
     Student** A = new Student*[counter]; //students in given grade array
     Student** B = new Student*[numElements-counter]; //other students array
     Student** C = new Student*[numElements]; //array for the merged arrays.
     inOrderSplit(tree->root, grade, A, 0, B, 0); //fills the A and B array
     for(int i=0; i<counter; i++) A[i]->PWR += powerIncrease;
     mergeStudentsArrays(A, counter, B, numElements-counter, C); //merge array into C array
-    tree = arrayToTree(C, numElements);
+    newTree = arrayToTree(C, numElements);
+    inOrderUpdateStudent(tree->root); //puts null in the nodes of the tree before destruction
+    delete tree;
+    tree=newTree; //not sure if we can do this - or we need to return it from the function out
     delete[] A;
     delete[] B;
     delete[] C;
