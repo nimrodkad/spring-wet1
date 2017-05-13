@@ -158,36 +158,35 @@ int Xmen::getMostPowerful(int teamID) {
 	}
 }
 
-int *Xmen::getAllStudentsByPower(int *numOfStudents) {
-	if (this->studentsPowers->numOfElements == 0) {
-		*numOfStudents = 0;
-		return NULL;
+void Xmen::getAllStudentsByPower(int *numOfStudents, int** Students) {
+    *numOfStudents = this->studentsPowers->numOfElements;
+	if (*numOfStudents == 0) {
+		return;
 	}
 	Student **studentsArray = this->studentsPowers->inorder(numOfStudents);
-	int *sortedIDArray = (int *) malloc(sizeof(int) * ((*numOfStudents)));
+	*Students = (int*)malloc(sizeof(int)*(*numOfStudents));
 	for (int i = *numOfStudents - 1, j = 0; i >= 0; i--, j++) {
-		sortedIDArray[i] = (studentsArray[j]->ID);
+		(*Students)[i] = (studentsArray[j]->ID);
 	}
 	delete[] studentsArray;
-	return sortedIDArray;
 }
 
-int *Xmen::getAllStudentsByPower(int teamID, int *numOfStudents, int *exist) {
+void Xmen::getAllStudentsByPower(int teamID, int *numOfStudents, int **Students, int *exist) {
 	Team *team = this->findTeam(teamID);
 	if (!team) {
 		*exist = DOESNT_EXIST;
-		return NULL;
+		return;
 	}
+	*numOfStudents = team->ownStudents->numOfElements;
 	if (team->ownStudents->numOfElements == 0) {
-		*numOfStudents = 0;
-		return NULL;
+		return;
 	}
 	Student **studentsArray = team->ownStudents->inorder(numOfStudents);
-	int *sortedIDArray = (int *) malloc(sizeof(int) * ((*numOfStudents)));
+	*Students = (int *) malloc(sizeof(int) * ((*numOfStudents)));
 	for (int i = *numOfStudents - 1, j = 0; i >= 0; i--, j++) {
-		sortedIDArray[i] = (studentsArray[j]->ID);
+		(*Students)[i] = (studentsArray[j]->ID);
 	}
-	return sortedIDArray;
+	delete[] studentsArray;
 }
 
 void Xmen::updateMostPowerful(Team *team) {
@@ -291,22 +290,16 @@ void inOrderSplit(
 //function for merging two students arrays(already sorted) into one sorted array.
 void mergeStudentsArrays(Student **a, int n, Student **b, int m, Student** c) {
 	int i = 0, j = 0, k = 0;
-	while (i < n && j < m) {
-		if (a[i]->PWR > b[i]->PWR) {
-			c[k++] = b[j++];
-		} else {
-			c[k++] = a[i++];
-		}
-	}
-	if (i < m) {
-		for (int p = i; p < n; p++) {
-			c[k++] = a[p];
-		}
-	} else {
-		for (int p = j; p < m; p++) {
-			c[k++] = b[p];
-		}
-	}
+
+    while (i < n && j < m)
+       c[k++] = a[i]->PWR < b[j]->PWR ? a[i++] : b[j++];
+
+    while (i < n)
+        c[k++] = a[i++];
+
+
+    while (j < m)
+        c[k++] = b[j++];
 }
 
 //________________________________________________________________________

@@ -111,11 +111,11 @@ StatusType GetAllStudentsByPower(void *DS, int TeamID, int **Students, int *numO
 	int exist=1;
 	try {
 		if(TeamID < 0){
-			*Students=((Xmen*) DS)->
-					getAllStudentsByPower(numOfStudents);
+			((Xmen*) DS)->
+					getAllStudentsByPower(numOfStudents, Students);
 		}else{
-			*Students= ((Xmen*) DS)->
-					getAllStudentsByPower(TeamID,numOfStudents,&exist);
+			((Xmen*) DS)->
+					getAllStudentsByPower(TeamID,numOfStudents,Students,&exist);
 		}
 		if(exist == DOESNT_EXIST){ //check if team doesn't exist
 				return FAILURE;

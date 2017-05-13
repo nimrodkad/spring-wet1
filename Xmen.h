@@ -57,12 +57,12 @@ public:
   //getAllStudentsByPower function: sorts all students in
   //the school by their power(or ID). returns a sorted students ID array,
   //and the number of them in the pointer.
-  int *getAllStudentsByPower(int *numOfStudents);
+  void getAllStudentsByPower(int *numOfStudents, int **Students);
 
   //getAllStudentsByPower function: sorts all students in
   //a given team by their power(or ID). returns a sorted students ID array,
   //and the number of them in the pointer.
-  int *getAllStudentsByPower(int teamID, int *numOfStudents, int *exist);
+  void getAllStudentsByPower(int teamID, int *numOfStudents, int **Students, int *exist);
 
   //increaseLevel function: increases the power of all students in a given grade
   //by a positive number. returns true if SUCCESS and false otherwise.
