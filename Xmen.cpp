@@ -13,6 +13,7 @@ void mergeStudentsArrays(Student **a, int n, Student **b, int m, Student** c);
 AVLtree<Student, Student, compByStudentPower>* arrayToTree(Student** treeArray,int size);
 void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, int powerIncrease);
 void inOrderTeams(AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease);
+void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentID>::AVLNode *iterator);
 
 Xmen::Xmen() : mostPowerfulID(-1), mostPowerfulPower(-1) {
 	teams = new AVLtree<Team, Team, compByTeamID>();
@@ -131,9 +132,9 @@ bool Xmen::moveStudentToTeam(int studentID, int teamID) {
 }
 
 void Xmen::increaseLevel(int grade, int powerIncrease) { // changed from bool to void
-    inOrderUpdate(students->root, grade, powerIncrease);
-    updateTree(studentsPowers, grade, powerIncrease);
-    inOrderTeams(teams->root, grade, powerIncrease);
+    inOrderUpdate(students->root, grade, powerIncrease); //increases the power in the StudentsByID tree
+    updateTree(studentsPowers, grade, powerIncrease);//increases the power in the StudentsByPWR tree
+    inOrderTeams(teams->root, grade, powerIncrease); // for each available team so the same
 }
 
 int Xmen::getMostPowerful() {
@@ -259,7 +260,16 @@ void inOrderUpdate(
 	inOrderUpdate(iterator->right, grade, powerInc);
 }
 
-//function that puts the studens in given grade in A array, others in B array.
+//the function puts NULL in the old tree pointers to student
+void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentID>::AVLNode *iterator){
+		if(!iterator){
+			return;
+		}
+		inOrderUpdateStudent(iterator->left);
+		iterator->keyValue=NULL;
+		inOrderUpdateStudent(iterator->right);
+}
+
 void inOrderSplit(
 		AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator,
 		int grade, Student **a, int n, Student **b, int m) {//first call to func(n=m=0)
@@ -316,7 +326,7 @@ void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, 
 {
     if(!tree) return;
     int counter = 0;
-    inOrderCount(tree->root, grade, &counter);
+    inOrderCount(tree->root, grade, &counter); //count the number of student in the given grade
     if(!counter) return;
     int numElements = tree->numOfElements;
     if(counter == numElements)
@@ -334,7 +344,7 @@ void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, 
     delete[] A;
     delete[] B;
     delete[] C;
-}
+}//where do we delete the old tree? (before we do so we need to use inOrderUpdateStudent function)
 
 void inOrderTeams(AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease)
 {
