@@ -12,7 +12,7 @@ void inOrderSplit(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterat
 void mergeStudentsArrays(Student **a, int n, Student **b, int m, Student** c);
 AVLtree<Student, Student, compByStudentPower>* arrayToTree(Student** treeArray,int size);
 void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, int powerIncrease);
-void inOrderTeams(AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease);
+void inOrderTeams(Xmen *xmen,AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease);
 void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator);
 
 Xmen::Xmen() : mostPowerfulID(-1), mostPowerfulPower(-1) {
@@ -134,7 +134,8 @@ bool Xmen::moveStudentToTeam(int studentID, int teamID) {
 void Xmen::increaseLevel(int grade, int powerIncrease) { // changed from bool to void
     inOrderUpdate(students->root, grade, powerIncrease); //increases the power in the StudentsByID tree
     updateTree(studentsPowers, grade, powerIncrease);//increases the power in the StudentsByPWR tree
-    inOrderTeams(teams->root, grade, powerIncrease); // for each available team so the same
+    this->updateMostPowerful();
+    inOrderTeams(this,teams->root, grade, powerIncrease); // for each available team so the same
 }
 
 int Xmen::getMostPowerful() {
@@ -350,10 +351,11 @@ void updateTree(AVLtree<Student, Student, compByStudentPower> *tree, int grade, 
     delete[] C;
 }//where do we delete the old tree? (before we do so we need to use inOrderUpdateStudent function)
 
-void inOrderTeams(AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease)
+void inOrderTeams(Xmen *xmen,AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease)
 {
     if(!root) return;
-    inOrderTeams(root->left, grade, powerIncrease);
+    inOrderTeams(xmen,root->left, grade, powerIncrease);
     updateTree(root->keyValue->ownStudents, grade, powerIncrease);
-    inOrderTeams(root->right, grade, powerIncrease);
+    xmen->updateMostPowerful(root->keyValue); //updates the most dangerous of the current tree
+    inOrderTeams(xmen,root->right, grade, powerIncrease);
 }
