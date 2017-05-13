@@ -1,6 +1,5 @@
-#include "AVLtree.h"
 #include "student.h"
-#include "team.h"
+#include "AVLTree.h"
 #include "utils.h"
 #include <iostream>
 
