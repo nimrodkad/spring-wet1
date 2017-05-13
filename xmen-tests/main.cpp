@@ -107,7 +107,7 @@ void GetAllStudentsByPowerTest() {
 	assert(AddStudent(xmen, 4, 4, 4) == SUCCESS);
 	assert(GetAllStudentsByPower(xmen,-1,&students,&num)==SUCCESS); //get all powers
 	for(int i=0;i<num;i++){
-		std::cout << ((students)[i]) + " " <<std::endl;
+		std::cout << students[i] << " " <<std::endl;
 	}
 	assert(AddTeam(xmen,1)==SUCCESS);
 	assert(AddTeam(xmen,2)==SUCCESS);
@@ -117,7 +117,7 @@ void GetAllStudentsByPowerTest() {
 	assert(MoveStudentToTeam(xmen, 2, 2) == SUCCESS);
 	assert(GetAllStudentsByPower(xmen,1,&students,&num)==SUCCESS); //get all powers team 1
 	for(int i=0;i<num;i++){
-			std::cout << ((students)[i]) + " " <<std::endl;
+			std::cout << students[i] << " " <<std::endl;
 	}
 	assert(GetAllStudentsByPower(xmen,3,&students,&num)==FAILURE); //team doesnt exist
 	delete xmen;
