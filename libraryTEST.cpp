@@ -148,15 +148,96 @@ void IncreaseLevelTest(){
     std::cout << "end of IncreaseLevelTest" << std::endl;
 }
 
+void IncreaseLevelTest2(){
+    Xmen *xmen = new Xmen();
+	int studentID;
+	assert(AddStudent(xmen, 1, 1, 1) == SUCCESS);
+	assert(AddStudent(xmen, 4, 1, 4) == SUCCESS);
+	assert(AddStudent(xmen, 7, 1, 7) == SUCCESS);
+
+	assert(AddStudent(xmen, 2, 2, 2) == SUCCESS);
+	assert(AddStudent(xmen, 5, 2, 5) == SUCCESS);
+	assert(AddStudent(xmen, 8, 2, 8) == SUCCESS);
+
+    assert(AddStudent(xmen, 3, 3, 3) == SUCCESS);
+    assert(AddStudent(xmen, 6, 3, 6) == SUCCESS);
+    assert(AddStudent(xmen, 9, 3, 9) == SUCCESS);
+
+    assert(AddTeam(xmen,1)==SUCCESS);
+	assert(AddTeam(xmen,2)==SUCCESS);
+	assert(AddTeam(xmen,3)==SUCCESS);
+
+	assert(MoveStudentToTeam(xmen, 1, 1) == SUCCESS);
+	assert(MoveStudentToTeam(xmen, 2, 1) == SUCCESS);
+	assert(MoveStudentToTeam(xmen, 3, 1) == SUCCESS);
+
+	assert(MoveStudentToTeam(xmen, 4, 2) == SUCCESS);
+	assert(MoveStudentToTeam(xmen, 5, 2) == SUCCESS);
+	assert(MoveStudentToTeam(xmen, 6, 2) == SUCCESS);
+
+	assert(MoveStudentToTeam(xmen, 7, 3) == SUCCESS);
+	assert(MoveStudentToTeam(xmen, 8, 3) == SUCCESS);
+	assert(MoveStudentToTeam(xmen, 9, 3) == SUCCESS);
+
+	//----------------------------------------------------
+	assert(GetMostPowerful(xmen, -1, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 9);
+    assert(GetMostPowerful(xmen, 1, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 3);
+    assert(GetMostPowerful(xmen, 2, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 6);
+    assert(GetMostPowerful(xmen, 3, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 9);
+
+    assert(IncreaseLevel(xmen,1,2)==SUCCESS);
+
+    assert(GetMostPowerful(xmen, -1, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 7);
+    assert(GetMostPowerful(xmen, 1, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 1);
+    assert(GetMostPowerful(xmen, 2, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 4);
+    assert(GetMostPowerful(xmen, 3, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 7);
+
+    assert(IncreaseLevel(xmen,2,3)==SUCCESS);
+
+    assert(GetMostPowerful(xmen, -1, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 8);
+    assert(GetMostPowerful(xmen, 1, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 2);
+    assert(GetMostPowerful(xmen, 2, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 5);
+    assert(GetMostPowerful(xmen, 3, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 8);
+
+    assert(GetMostPowerful(xmen, 2, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 5);
+    assert(MoveStudentToTeam(xmen, 8, 2) == SUCCESS);
+    assert(GetMostPowerful(xmen, 2, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 8);
+    assert(GetMostPowerful(xmen, 3, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 7);
+    assert(GetMostPowerful(xmen, -1, &studentID) == SUCCESS); //most powerful now is 3 with 5 power
+    assert(studentID == 8);
+
+
+
+
+delete xmen;
+    std::cout << "end of IncreaseLevelTest" << std::endl;
+}
+
 int main() {
-	InitTest();
-	AddStudentTest();
-	AddTeamTest();
-	MoveStudentToTeamTest();
-	GetMostPowerfulTest();
-	RemoveStudentTest();
-	GetAllStudentsByPowerTest();
-	IncreaseLevelTest();
+	//InitTest();
+	//AddStudentTest();
+	//AddTeamTest();
+	//MoveStudentToTeamTest();
+	//GetMostPowerfulTest();
+	//RemoveStudentTest();
+	//GetAllStudentsByPowerTest();
+	//IncreaseLevelTest();
+	IncreaseLevelTest2();
 	return 0;
 }
 

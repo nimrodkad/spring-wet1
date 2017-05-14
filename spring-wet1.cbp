@@ -37,11 +37,20 @@
 		<Unit filename="Xmen.h" />
 		<Unit filename="library1.cpp" />
 		<Unit filename="library1.h" />
-		<Unit filename="main1.cpp" />
+		<Unit filename="libraryTEST.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="main.cc" />
+		<Unit filename="main1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="student.cpp" />
 		<Unit filename="student.h" />
 		<Unit filename="team.cpp" />
 		<Unit filename="team.h" />
+		<Unit filename="test_utils.h" />
 		<Unit filename="utils.cpp" />
 		<Unit filename="utils.h" />
 		<Extensions>

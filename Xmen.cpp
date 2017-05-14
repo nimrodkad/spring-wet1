@@ -112,6 +112,9 @@ bool Xmen::moveStudentToTeam(int studentID, int teamID) {
 		return false;
 	}
 	if (dummy2->team) { //if already has a team - remove him from it
+        if(dummy2->team->ID == teamID){
+            return true;
+        }
 		dummy2->team->ownStudents->remove(dummy2);
 		this->updateMostPowerful(dummy2->team);
 	}
@@ -161,6 +164,7 @@ int Xmen::getMostPowerful(int teamID) {
 void Xmen::getAllStudentsByPower(int *numOfStudents, int** Students) {
     *numOfStudents = this->studentsPowers->numOfElements;
 	if (*numOfStudents == 0) {
+        *Students=NULL;
 		return;
 	}
 	Student **studentsArray = this->studentsPowers->inorder(numOfStudents);
@@ -179,6 +183,7 @@ void Xmen::getAllStudentsByPower(int teamID, int *numOfStudents, int **Students,
 	}
 	*numOfStudents = team->ownStudents->numOfElements;
 	if (team->ownStudents->numOfElements == 0) {
+        *Students=NULL;
 		return;
 	}
 	Student **studentsArray = team->ownStudents->inorder(numOfStudents);
