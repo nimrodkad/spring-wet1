@@ -1,5 +1,5 @@
 #include "student.h"
-#include "AVLTree.h"
+#include "AVLtree.h"
 #include "utils.h"
 #include <iostream>
 
