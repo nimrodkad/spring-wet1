@@ -41,11 +41,7 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="main.cc" />
-		<Unit filename="main1.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
+		<Unit filename="main1.cpp" />
 		<Unit filename="student.cpp" />
 		<Unit filename="student.h" />
 		<Unit filename="team.cpp" />
