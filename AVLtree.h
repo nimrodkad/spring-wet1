@@ -687,19 +687,18 @@ public:
     }
   }
 //helper function for testing the tree's actions
-void print() {
-  		if (this->isEmpty()) {
-  			std::cout << std::endl;
-  		} else {
-  			key **array = this->inorder(NULL);
-  			for (int i = 0; i < this->numOfElements; ++i) {
-  				std::cout << *(array[i]);
-  			}
-  			delete[] array;
-  			std::cout << std::endl;
-  		}
-  	}
+void print(AVLNode* node)
+{
+    if(!node) return;
+    print(node->left);
+    std::cout << *node->keyValue << " ";
+    print(node->right);
+}
 
+void print() {
+    print(root);
+    std::cout << std::endl;
+}
 //________________________________________________________________________
 //  AVLtree destructor
 //________________________________________________________________________
