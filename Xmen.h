@@ -3,6 +3,10 @@
 #include "utils.h"
 #include <iostream>
 
+#define STUDENT_DOESNT_EXIST -1
+#define TEAM_DOESNT_EXIST -2
+
+
 //exception classes for catching errors
 class studentDoesNotExist: public std::exception{};
 class teamDoesNotExist: public std::exception{};
@@ -77,3 +81,14 @@ public:
   void updateMostPowerful();
 
 };
+
+//Helper functions for IncreaseLevel
+void inOrderUpdate(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, int powerInc);
+void inOrderUpdate(AVLtree<Student, Student, compByStudentID>::AVLNode *iterator, int grade, int powerInc);
+void inOrderCount(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, int *counter);
+void inOrderSplit(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, Student **a, int *n, Student **b, int *m);
+void mergeStudentsArrays(Student **a, int n, Student **b, int m, Student** c);
+AVLtree<Student, Student, compByStudentPower>* arrayToTree(Student** treeArray,int size);
+void updateTree(AVLtree<Student, Student, compByStudentPower> **tree, int grade, int powerIncrease);
+void inOrderTeams(Xmen *xmen,AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease);
+void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator);

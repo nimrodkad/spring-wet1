@@ -2,7 +2,7 @@
 #include "Xmen.h"
 #include <iostream>
 
-#define DOESNT_EXIST -2
+#define EXISTS 1
 
 void *Init() {
 	Xmen *DS = NULL;
@@ -75,7 +75,7 @@ StatusType GetMostPowerful(void *DS, int TeamID, int *StudentID) {
 			(*StudentID)=((Xmen*) DS)->getMostPowerful();
 		}else{
 			(*StudentID)=((Xmen*) DS)->getMostPowerful(TeamID);
-			if((*StudentID) == DOESNT_EXIST){
+			if((*StudentID) == TEAM_DOESNT_EXIST){
 				return FAILURE;
 			}
 		}
@@ -108,7 +108,7 @@ StatusType GetAllStudentsByPower(void *DS, int TeamID, int **Students, int *numO
 	if( !DS || !Students || !numOfStudents || TeamID == 0){
 		return INVALID_INPUT;
 	}
-	int exist=1;
+	int exist = EXISTS;
 	try {
 		if(TeamID < 0){
 			((Xmen*) DS)->
@@ -117,7 +117,7 @@ StatusType GetAllStudentsByPower(void *DS, int TeamID, int **Students, int *numO
 			((Xmen*) DS)->
 					getAllStudentsByPower(TeamID,numOfStudents,Students,&exist);
 		}
-		if(exist == DOESNT_EXIST){ //check if team doesn't exist
+		if(exist == TEAM_DOESNT_EXIST){ //check if team doesn't exist
 				return FAILURE;
 		}
 	}catch (std::bad_alloc &b) {

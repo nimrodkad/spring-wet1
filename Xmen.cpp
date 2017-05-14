@@ -3,19 +3,7 @@
 #include <cassert>
 #include <cstdlib>
 
-#define DOESNT_EXIST -2
-
-void inOrderUpdate(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, int powerInc);
-void inOrderUpdate(AVLtree<Student, Student, compByStudentID>::AVLNode *iterator, int grade, int powerInc);
-void inOrderCount(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, int *counter);
-void inOrderSplit(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator, int grade, Student **a, int *n, Student **b, int *m);
-void mergeStudentsArrays(Student **a, int n, Student **b, int m, Student** c);
-AVLtree<Student, Student, compByStudentPower>* arrayToTree(Student** treeArray,int size);
-void updateTree(AVLtree<Student, Student, compByStudentPower> **tree, int grade, int powerIncrease);
-void inOrderTeams(Xmen *xmen,AVLtree<Team, Team, compByTeamID>::AVLNode *root, int grade, int powerIncrease);
-void inOrderUpdateStudent(AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator);
-
-Xmen::Xmen() : mostPowerfulID(-1), mostPowerfulPower(-1) {
+Xmen::Xmen() : mostPowerfulID(STUDENT_DOESNT_EXIST), mostPowerfulPower(STUDENT_DOESNT_EXIST) {
 	teams = new AVLtree<Team, Team, compByTeamID>();
 	students = new AVLtree<Student, Student, compByStudentID>;
 	studentsPowers = new AVLtree<Student, Student, compByStudentPower>;
@@ -143,7 +131,7 @@ void Xmen::increaseLevel(int grade, int powerIncrease) { // changed from bool to
 
 int Xmen::getMostPowerful() {
 	if (this->students->numOfElements == 0) {
-		return -1;
+		return STUDENT_DOESNT_EXIST;
 	} else {
 		return this->mostPowerfulID;
 	}
@@ -152,10 +140,10 @@ int Xmen::getMostPowerful() {
 int Xmen::getMostPowerful(int teamID) {
 	Team *team = this->findTeam(teamID);
 	if (!team) {
-		return DOESNT_EXIST;
+		return TEAM_DOESNT_EXIST;
 	}
 	if (team->ownStudents->numOfElements == 0) {
-		return -1;
+		return STUDENT_DOESNT_EXIST;
 	} else {
 		return team->mostPowerfulID;
 	}
@@ -178,7 +166,7 @@ void Xmen::getAllStudentsByPower(int *numOfStudents, int** Students) {
 void Xmen::getAllStudentsByPower(int teamID, int *numOfStudents, int **Students, int *exist) {
 	Team *team = this->findTeam(teamID);
 	if (!team) {
-		*exist = DOESNT_EXIST;
+		*exist = TEAM_DOESNT_EXIST;
 		return;
 	}
 	*numOfStudents = team->ownStudents->numOfElements;
@@ -196,7 +184,7 @@ void Xmen::getAllStudentsByPower(int teamID, int *numOfStudents, int **Students,
 
 void Xmen::updateMostPowerful(Team *team) {
 	if (team->ownStudents->numOfElements == 0) {
-		team->mostPowerfulID = team->mostPowerfulPower = -1;
+		team->mostPowerfulID = team->mostPowerfulPower = STUDENT_DOESNT_EXIST;
 		return;
 	}
 	AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator =
@@ -210,7 +198,7 @@ void Xmen::updateMostPowerful(Team *team) {
 
 void Xmen::updateMostPowerful() {
 	if (this->studentsPowers->numOfElements == 0) {
-		this->mostPowerfulID = this->mostPowerfulPower = -1;
+		this->mostPowerfulID = this->mostPowerfulPower = STUDENT_DOESNT_EXIST;
 		return;
 	}
 	AVLtree<Student, Student, compByStudentPower>::AVLNode *iterator =

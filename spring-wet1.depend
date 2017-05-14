@@ -6,9 +6,9 @@
 
 1494324066 c:\users\nimrod\onedrive\cs\ds\spring-wet1\library1.h
 
-1494709243 c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen.h
+1494765468 c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen.h
 	"student.h"
-	"AVLTree.h"
+	"AVLtree.h"
 	"utils.h"
 	<iostream>
 
@@ -45,7 +45,7 @@
 1494324066 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\utils.cpp
 	"utils.h"
 
-1494762266 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen.cpp
+1494765424 source:c:\users\nimrod\onedrive\cs\ds\spring-wet1\xmen.cpp
 	"Xmen.h"
 	"utils.h"
 	<cassert>
