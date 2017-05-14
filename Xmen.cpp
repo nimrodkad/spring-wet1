@@ -297,7 +297,11 @@ void mergeStudentsArrays(Student **a, int n, Student **b, int m, Student** c) {
 	int i = 0, j = 0, k = 0;
 
     while (i < n && j < m)
-       c[k++] = a[i]->PWR < b[j]->PWR ? a[i++] : b[j++];
+    {
+       //c[k++] = a[i]->PWR < b[j]->PWR ? a[i++] : b[j++];
+       compByStudentPower comp;
+       c[k++] = comp(a[i], b[j]) ? a[i++] : b[j++];
+    }
 
     while (i < n)
         c[k++] = a[i++];
